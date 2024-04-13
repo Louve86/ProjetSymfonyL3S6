@@ -38,6 +38,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $birthdate = null;
 
+    #[ORM\OneToOne(mappedBy: 'customer', cascade: ['persist', 'remove'])]
+    private ?ShoppingCart $shoppingCart = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -141,6 +144,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBirthdate(\DateTimeInterface $birthdate): static
     {
         $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    public function getShoppingCart(): ?ShoppingCart
+    {
+        return $this->shoppingCart;
+    }
+
+    public function setShoppingCart(ShoppingCart $shoppingCart): static
+    {
+        // set the owning side of the relation if necessary
+        if ($shoppingCart->getCustomer() !== $this) {
+            $shoppingCart->setCustomer($this);
+        }
+
+        $this->shoppingCart = $shoppingCart;
 
         return $this;
     }
