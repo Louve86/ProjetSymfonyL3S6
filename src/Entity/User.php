@@ -41,6 +41,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'customer', cascade: ['persist', 'remove'])]
     private ?ShoppingCart $shoppingCart = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Country $country = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -161,6 +165,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->shoppingCart = $shoppingCart;
+
+        return $this;
+    }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(Country $country): static
+    {
+        $this->country = $country;
 
         return $this;
     }
