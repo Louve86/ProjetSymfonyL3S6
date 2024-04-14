@@ -9,6 +9,9 @@
     <div id="header">
         {% include 'Layouts/header.html.twig' %}
     </div>
+    <div id ="menu">
+        {{ render(controller('App\\Controller\\AccueilController::menuAction')) }}
+    </div>
     <div id="titre">
         <h1>{% block titre %}{% endblock %}</h1>
     </div>

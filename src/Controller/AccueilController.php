@@ -14,4 +14,11 @@ class AccueilController extends AbstractController
     {
         return $this->render('Accueil/accueil.html.twig');
     }
+
+    public function menuAction() : Response
+    {
+        //il faudra interroger la base de donnée pour avoir le nombre d'article dans le panier. Pour l'instant, c'est arbitraire.
+        $nbArticles=8;
+        return $this->render('Layouts/menu.html.twig',array("nbArticles"=>$nbArticles));
+    }
 }
