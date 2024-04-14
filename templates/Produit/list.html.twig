@@ -1,0 +1,27 @@
+{% extends 'Layouts/vente.html.twig' %}
+{% block title %}{{ parent() }}{% endblock %}
+{% block titre %}Liste des produits{% endblock %}
+{% block vue %}
+    <table>
+        <tr><th>Nom</th><th>Prix</th><th>Quantité</th></tr>
+        {% for produit in produits %}
+            {% set nbInCart =0 %}
+            {% if user.shoppingCart is not null %}
+            {% for cartProduct in user.shoppingCart.shoppingCartProducts %}
+                {% if cartProduct.product == produit %}
+                    {% set nbInCart = cartProduct.quantities %}
+                {% endif %}
+            {% endfor%}
+            {% endif %}
+            <tr><td>{{ produit.name }}</td>
+                <td>{{ produit.price }}</td>
+                <td>{{ produit.quantity }}</td>
+                {% if (nbInCart != 0) or (produit.quantity != 0) %}
+                    <td>
+                        {{ render(controller('App\\Controller\\ProduitController::modifCartAction',{'produit' : produit, 'min':nbInCart})) }}
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

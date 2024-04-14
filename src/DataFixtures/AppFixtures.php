@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Country;
+use App\Entity\Product;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -18,13 +20,18 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $em): void
     {
 
+        $country1 = new Country();
+        $em->persist($country1);
+        $country1 ->setCode("01")
+            ->setName("France");
         $user1 = new User();
         $user1  ->setLogin('sadmin')
             ->setFirstname('topi')
             ->setName('nambour')
             ->setBirthdate(new \DateTime())
+            ->setCountry($country1)
             ->setRoles(['ROLE_SUPERADMIN']);
-            $user1 ->setPassword('$2y$13$L7hFhe4npdebqpjOEBSMQ.Qt2ZBdBuf4ByLw8OteiUKowdeHnXx2i');
+        $user1 ->setPassword('$2y$13$L7hFhe4npdebqpjOEBSMQ.Qt2ZBdBuf4ByLw8OteiUKowdeHnXx2i');
 
         $em->persist($user1);
 
@@ -57,6 +64,14 @@ class AppFixtures extends Fixture
         $user4 ->setPassword('$2y$13$lDN8OeCYXpchwjAzjMyX..K.LNjjMISsFkMtixfm79iSDXWnURpe6');
 
         $em->persist($user4);
+
+        $product1 = new Product();
+        $product1->setName("tomate")
+            ->setPrice("2.80")
+            ->setQuantity(23);
+        $product1->addCountry($country1);
+
+        $em->persist($product1);
 
         $em->flush();
     }

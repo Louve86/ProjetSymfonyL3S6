@@ -15,7 +15,15 @@
     <li>Créer un compte</li>
     {% else %}
         <li><a href="{{ path('app_logout') }}">Deconnexion</a></li>
-        <li>Mon compte</li>
-        <li>Produits</li>
+        {% if is_granted('ROLE_CLIENT') %}
+            <li>Mon compte</li>
+            <li><a href="{{ path('produit_list') }}">Produits</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li>Clients</li>
+            {% endif %}
+        {% endif %}
+        {% if is_granted('ROLE_SUPERADMIN') %}
+            <li>Administrateurs</li>
+        {% endif %}
     {% endif %}
 </menu>
