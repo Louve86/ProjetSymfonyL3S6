@@ -1,0 +1,43 @@
+{% extends 'Layouts/base.html.twig' %}
+
+{% block body %}
+    <h1>Liste des clients</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Login</th>
+            <th>Mot de passe</th>
+            <th>Nom et prénom</th>
+            <th>Date de naissance</th>
+            <th>statut</th>
+            <th>pays</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            {% set urlDelete = path('admin_delete', {'id' : user.id}) %}
+            <tr>
+            <td>{{ user.login }}</td>
+            <td>{{ user.password }}</td>
+            <td>{{ user.firstname }} {{ user.name }}</td>
+            <td>{{ user.birthdate|date('d-m-Y') }}</td>
+            <td>{% if 'ROLE_CLIENT' in user.roles %}
+                Client
+                {% elseif 'ROLE_ADMIN' in user.roles %}
+                Admin
+                {% elseif 'ROLE_SUPERADMIN' in user.roles %}
+                Super-Admin
+                {% endif %}
+            </td>
+            <td>{% if user.country is defined  %}
+            {{ user.country }}
+                {% else %}
+                    Pas de pays défini
+                {% endif %}
+            </td>
+                    <td><a href="{{ urlDelete }}">Supprimer</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
