@@ -1,9 +1,9 @@
 {# template de niveau 2 #}
-{% extends 'Layouts/level1.html.twig' %}
+{% extends 'Layouts/base.html.twig' %}
 {% block title %}Site de Vente{% endblock %}
 {% block css %}
     {{ parent() }}
-    <link rel="stylesheet" media="screen" type="text/css" title="level1" href="{{ asset('css/level2.css') }}" />
+    <link rel="stylesheet" media="screen" type="text/css" title="level1" href="{{ asset('css/vente.css') }}" />
 {% endblock %}
 {% block body %}
     <div id="header">
