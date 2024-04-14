@@ -1,0 +1,19 @@
+{# template de niveau 2 #}
+{% extends 'Layouts/level1.html.twig' %}
+{% block title %}Site de Vente{% endblock %}
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" media="screen" type="text/css" title="level1" href="{{ asset('css/level2.css') }}" />
+{% endblock %}
+{% block body %}
+    <div id="header">
+        {% include 'Layouts/header.html.twig' %}
+    </div>
+    <div id="titre">
+        <h1>{% block titre %}{% endblock %}</h1>
+    </div>
+    <div id="vue">
+        {% block vue%}{% endblock%}
+    </div>
+    <div id="footer">{% include 'Layouts/footer.html.twig' %}</div>
+{% endblock %}
