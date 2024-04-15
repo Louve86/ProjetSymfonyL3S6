@@ -2,6 +2,9 @@
 {% block title %}{{ parent() }}{% endblock %}
 {% block titre %}Liste des produits{% endblock %}
 {% block vue %}
+    {% if is_granted("ROLE_ADMIN") %}
+        <p><a href="{{ path("produit_add") }}">Ajouter un produit</a></p>
+    {% endif %}
     <table>
         <tr><th>Nom</th><th>Prix</th><th>Quantité</th></tr>
         {% for produit in produits %}
@@ -18,7 +21,7 @@
                 <td>{{ produit.quantity }}</td>
                 {% if (nbInCart != 0) or (produit.quantity != 0) %}
                     <td>
-                        {{ render(controller('App\\Controller\\ProduitController::modifCartAction',{'produit' : produit, 'min':nbInCart})) }}
+                        {{ render(controller('App\\Controller\\ProduitController::EditCartAction',{'min':-nbInCart,'max':produit.quantity})) }}
                     </td>
                 {% endif %}
             </tr>

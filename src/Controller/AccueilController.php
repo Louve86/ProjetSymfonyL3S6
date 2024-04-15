@@ -12,7 +12,7 @@ class AccueilController extends AbstractController
     #[Route('', name: '')]
     public function accueilAction(): Response
     {
-        return $this->render('Accueil/accueil.html.twig');
+        return $this->render('Accueil/accueil.html.twig',array("user"=>$this->getUser()));
     }
 
     public function menuAction() : Response

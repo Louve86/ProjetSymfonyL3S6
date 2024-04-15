@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Entity\ShoppingCart;
-use App\Entity\ShoppingCartProduct;
-use App\Form\ModifCartType;
+use App\Form\AddProductType;
+use App\Form\EditCartType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -22,25 +21,28 @@ class ProduitController extends AbstractController
         return $this->render('Produit/list.html.twig',array('produits'=>$produits,'user'=>$this->getUser()));
     }
 
-    public function modifCartAction(Product $produit,int $min, Request $request): Response{
-        $user=$this->getUser();
-        $form = $this->createForm(ModifCartType::class,null,['data'=>['max'=>$produit->getQuantity(),'min'=>$min]]);
-        $form->add('send',SubmitType::class,['label'=>'Modifier']);
-        /*
+    #[Route('/edit', name:'_edit')]
+    public function EditCartAction(Request $request,int $min,int $max): Response{
+        $form = $this->createForm(EditCartType::class,null,['data'=>['min'=>$min,'max'=>$max]]);
+        $form->add('send',SubmitType::class,['label'=>'Modifier']);;
+        return $this->render('Produit/EditCart.html.twig',['myform'=>$form->createView()]);
+    }
+
+    #[Route('/add', name:'_add')]
+    public function AddCartAction(Request $request,EntityManagerInterface $em): Response{
+        $product=new Product();
+        $form = $this->createForm(AddProductType::class,$product);
+        $form->add('send',SubmitType::class,['label'=>'Ajouter']);
         $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $shoppingCart=$user->getShoppingCart();
-            if(is_null($shoppingCart)){
-                $shoppingCart=new ShoppingCart();
-                $shoppingCartProduct= new ShoppingCartProduct();
-                $shoppingCartProduct->setProduct($produit);
-                $shoppingCartProduct->setQuantity($form->get('nbArticles')->getData());
-                $shoppingCart->addShoppingCartProduct($shoppingCartProduct);
-            }
+        if($form->isSubmitted()&& $form->isValid()){
+            $em->persist($product);
+            $em->flush();
+            $this->addFlash('info','film ajouté');
+            return $this->redirectToRoute('produit_list');
         }
-        */
-
-        return $this->render('Produit/modif_cart.html.twig',array('myform'=>$form->createView(),'produit'=>$produit,'user'=>$user));
+        if($form->isSubmitted()){
+            $this->addFlash('info', 'formulaire incorrect');
+        }
+        return $this->render('Produit/Add.html.twig',['myform'=>$form->createView()]);
     }
 }

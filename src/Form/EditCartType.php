@@ -7,23 +7,23 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ModifCartType extends AbstractType
+class EditCartType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $nbMax = $options['data']['max'];
-        $nbMin = $options['data']['min'];
-        $choices = [];
-        for ($nbArticle=$nbMin; $nbArticle<=$nbMax; $nbArticle++)
-            $choices[$nbArticle] = $nbArticle;
+        $min=$options['data']['min'];
+        $max=$options['data']['max'];
+        $choices=[];
+        for($nbArticles = $min;$nbArticles<$max+1;$nbArticles++){
+            $choices[$nbArticles]=$nbArticles;
+        }
         $builder
             ->add('nbArticles',
-                ChoiceType::class,
+            ChoiceType::class,
                 [
-                    'label' => 'Modifiez votre panier',
-                    'data' => 0,
-                    'choices' => $choices,
-                    'mapped' => false,
+                    'label'=>'Modifiez votre panier',
+                    'choices'=> $choices,
+                    'mapped'=>false,
                 ]
             )
         ;

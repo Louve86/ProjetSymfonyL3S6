@@ -1,4 +1,12 @@
 {# page d'acceuil du site #}
 {% extends 'Layouts/vente.html.twig' %}
 {% block titre %}Accueil{% endblock %}
-{% block vue %}<p>Bienvenue sur ce site de vente!</p>{% endblock %}
+{% block vue %}
+    <p>Bienvenue sur ce site de vente!</p>
+    {% if user is not null %}
+        {% if user.country is not null %}
+            <p>Votre pays c'est {{ user.country.name }}</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
