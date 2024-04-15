@@ -27,6 +27,7 @@ class Product
     private ?int $quantity = null;
 
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'products')]
+    #[ORM\JoinTable(name: "lic_product_country")]
     private Collection $countries;
 
     public function __construct()
