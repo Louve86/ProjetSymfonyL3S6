@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Entity\User;
+use App\Form\ProductType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,5 +56,32 @@ class AdminController extends AbstractController
         $this->addFlash('info', 'suppression utilisateur ' . $id . ' réussie');
 
         return $this->redirectToRoute('admin_list');
+    }
+
+    #[Route('/product/add', name: '_product_add')]
+    public function createProductAction(EntityManagerInterface $em, Request $request): Response
+    {
+        $product = new Product();
+
+        $form = $this->createForm(ProductType::class, $product);
+        $form->add('send', SubmitType::class, ['label' => 'add product']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em->persist($product);
+            $em->flush();
+            $this->addFlash('info', 'ajout produit réussi');
+            return $this->redirectToRoute('accueil');
+        }
+
+        if ($form->isSubmitted())
+            $this->addFlash('info', 'formulaire ajout produit incorrect');
+
+        $args = array(
+            'myform' => $form->createView(),
+        );
+        return $this->render('admin/product_add.html.twig', $args);
+
     }
 }
