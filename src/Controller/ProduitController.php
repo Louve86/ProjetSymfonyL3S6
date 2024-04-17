@@ -28,21 +28,4 @@ class ProduitController extends AbstractController
         return $this->render('Produit/EditCart.html.twig',['myform'=>$form->createView()]);
     }
 
-    #[Route('/add', name:'_add')]
-    public function AddCartAction(Request $request,EntityManagerInterface $em): Response{
-        $product=new Product();
-        $form = $this->createForm(AddProductType::class,$product);
-        $form->add('send',SubmitType::class,['label'=>'Ajouter']);
-        $form->handleRequest($request);
-        if($form->isSubmitted()&& $form->isValid()){
-            $em->persist($product);
-            $em->flush();
-            $this->addFlash('info','film ajouté');
-            return $this->redirectToRoute('produit_list');
-        }
-        if($form->isSubmitted()){
-            $this->addFlash('info', 'formulaire incorrect');
-        }
-        return $this->render('Produit/Add.html.twig',['myform'=>$form->createView()]);
-    }
 }

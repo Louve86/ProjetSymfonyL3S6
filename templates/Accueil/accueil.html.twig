@@ -2,11 +2,25 @@
 {% extends 'Layouts/vente.html.twig' %}
 {% block titre %}Accueil{% endblock %}
 {% block vue %}
-    <p>Bienvenue sur ce site de vente!</p>
-    {% if user is not null %}
-        {% if user.country is not null %}
-            <p>Votre pays c'est {{ user.country.name }}</p>
-        {% endif %}
+    <p>Bienvenue cher
+    {% if user is null %}
+        anonyme
+        !</p>
+        {% else %}
+            {% if is_granted('ROLE_SUPERADMIN')%}
+                super-administrateur
+            {% endif %}
+            {% if is_granted('ROLE_CLIENT') %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    administrateur
+                {% else %}
+                    client
+                {% endif %}
+            {% endif %}
+            !</p>
+            {% if user.country is not null %}
+                <p>Votre pays : {{ user.country.name }}</p>
+            {% endif %}
     {% endif %}
 {% endblock %}
 

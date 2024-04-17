@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\User;
+use App\Form\AddProductType;
 use App\Form\ProductType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,8 +64,8 @@ class AdminController extends AbstractController
     {
         $product = new Product();
 
-        $form = $this->createForm(ProductType::class, $product);
-        $form->add('send', SubmitType::class, ['label' => 'add product']);
+        $form = $this->createForm(AddProductType::class, $product);
+        $form->add('send', SubmitType::class, ['label' => 'Ajouter']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())

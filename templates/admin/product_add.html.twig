@@ -1,11 +1,12 @@
-{% extends  '/Layouts/base.html.twig' %}
+{% extends  '/Layouts/vente.html.twig' %}
 
 {% block title %}{{ parent() }} {% endblock %}
 
 
 
-{% block body %}
-    <h2>Ajout d'un Produit</h2>
+{% block titre%}Ajouter un produit{% endblock %}
+
+{% block vue %}
 
     {{ form_start(myform) }}
 

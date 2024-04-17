@@ -19,7 +19,10 @@ class AccueilController extends AbstractController
     public function menuAction(ShoppingCartService $shoppingCartService) : Response
     {
         $user = $this->getUser();
-        $nbProducts = $shoppingCartService->countProductsInShoppingCart($user->getId());
+        if (!is_null($user)){
+            $nbProducts = $shoppingCartService->countProductsInShoppingCart($user->getId());
+        }
+        else $nbProducts = 0;
         return $this->render('Layouts/menu.html.twig',array("user"=>$user, "nbproducts" => $nbProducts));
     }
 }

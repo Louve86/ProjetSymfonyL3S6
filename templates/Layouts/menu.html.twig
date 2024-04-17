@@ -1,5 +1,4 @@
-{# dans le futur, il faudra executer ce code que si l'utilisateur est connecté: #}
-{% if user is not null %}
+{% if is_granted('ROLE_CLIENT') %}
 <p>Il y a
     {{ nbproducts }}
     articles dans votre panier</p>
@@ -15,11 +14,11 @@
             <li>Mon compte</li>
             <li><a href="{{ path('produit_list') }}">Produits</a></li>
             {% if is_granted('ROLE_ADMIN') %}
-                <li>Clients</li>
+                <li><a href="{{ path('admin_list') }}">Clients</a></li>
             {% endif %}
         {% endif %}
         {% if is_granted('ROLE_SUPERADMIN') %}
-            <li>Administrateurs</li>
+            <li><a href="{{ path('superadmin_admin_add') }}">Administrateurs</a></li>
         {% endif %}
     {% endif %}
 </menu>

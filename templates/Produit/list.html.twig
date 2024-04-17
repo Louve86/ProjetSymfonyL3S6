@@ -3,7 +3,7 @@
 {% block titre %}Liste des produits{% endblock %}
 {% block vue %}
     {% if is_granted("ROLE_ADMIN") %}
-        <p><a href="{{ path("produit_add") }}">Ajouter un produit</a></p>
+        <p><a href="{{ path("admin_product_add") }}">Ajouter un produit</a></p>
     {% endif %}
     <table>
         <tr><th>Nom</th><th>Prix</th><th>Quantité</th></tr>
