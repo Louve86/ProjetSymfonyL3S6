@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\ShoppingCartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,9 +16,10 @@ class AccueilController extends AbstractController
         return $this->render('Accueil/accueil.html.twig',array("user"=>$this->getUser()));
     }
 
-    public function menuAction() : Response
+    public function menuAction(ShoppingCartService $shoppingCartService) : Response
     {
         $user = $this->getUser();
-        return $this->render('Layouts/menu.html.twig',array("user"=>$user));
+        $nbProducts = $shoppingCartService->countProductsInShoppingCart($user->getId());
+        return $this->render('Layouts/menu.html.twig',array("user"=>$user, "nbproducts" => $nbProducts));
     }
 }

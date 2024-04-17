@@ -1,11 +1,7 @@
 {# dans le futur, il faudra executer ce code que si l'utilisateur est connecté: #}
 {% if user is not null %}
 <p>Il y a
-    {% if user.ShoppingCart is not null %}
-    {{ user.ShoppingCart.ShoppingCartProducts is not null ? user.ShoppingCart.ShoppingCartProducts | length : 0 }}
-    {% else %}
-    0
-    {% endif %}
+    {{ nbproducts }}
     articles dans votre panier</p>
 {% endif %}
 <menu>
