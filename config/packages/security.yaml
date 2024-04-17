@@ -43,8 +43,8 @@ security:
         - { path: ^/$, roles: PUBLIC_ACCESS }                      # page d'Accueil publique
         - { path: ^/login$, roles: PUBLIC_ACCESS }        # page de login publique (par définition)
         - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }         # autres pages : nécessité d'être authentifié
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/superadmin, roles: ROLE_SUPERADMIN }
 
 
 when@test:

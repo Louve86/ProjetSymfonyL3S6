@@ -29,8 +29,8 @@
                 Super-Admin
                 {% endif %}
             </td>
-            <td>{% if user.country is defined  %}
-            {{ user.country }}
+            <td>{% if user.country is not null  %}
+            {{ user.country.name }}
                 {% else %}
                     Pas de pays défini
                 {% endif %}
