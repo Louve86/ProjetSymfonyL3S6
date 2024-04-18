@@ -7,9 +7,11 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'lic_user')]
+#[ORM\UniqueConstraint(name: 'name_firstname_unique', columns: ["name", "firstname"])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -27,6 +29,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Length(
+        min: 3,
+        max: 30,
+        minMessage: 'Le mot de passe doit faire un minimum de {{ limit }} caractères',
+        maxMessage: 'Le mot de passe doit faire un maximum de {{ limit }} caractères',
+    )]
+    #[Assert\NotEqualTo(
+        propertyPath: "login",
+        message: "Le mot de passe doit être différent du login"
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
@@ -180,4 +192,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+
+
+
+
+
 }
+

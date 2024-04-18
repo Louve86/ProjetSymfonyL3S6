@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -21,9 +22,11 @@ class Product
 
     //j'ai choisi d'utiliser la même échelle et précision qu'en SQL
     #[ORM\Column(precision: 5, scale: 2)]
+    #[Assert\Positive]
     private ?float $price = null;
 
     #[ORM\Column]
+    #[Assert\Positive]
     private ?int $quantity = null;
 
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'products')]

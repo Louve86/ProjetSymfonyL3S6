@@ -26,8 +26,8 @@ class AppFixtures extends Fixture
             ->setName("France");
         $user1 = new User();
         $user1  ->setLogin('sadmin')
-            ->setFirstname('topi')
-            ->setName('nambour')
+            ->setFirstname('super')
+            ->setName('admin')
             ->setBirthdate(new \DateTime())
             ->setCountry($country1)
             ->setRoles(['ROLE_SUPERADMIN']);
@@ -37,8 +37,8 @@ class AppFixtures extends Fixture
 
         $user2 = new User();
         $user2  ->setLogin('gilles')
-            ->setFirstname('topi')
-            ->setName('nambour')
+            ->setFirstname('gilles')
+            ->setName('subrenat')
             ->setBirthdate( new \DateTime())
             ->setRoles(['ROLE_ADMIN']);
         $user2 ->setPassword('$2y$13$c/R6x5jyR91olB6chgW6iuJlK2BXh8yVDGtLgy.xvu0BNR4v69lju');
@@ -47,8 +47,8 @@ class AppFixtures extends Fixture
 
         $user3 = new User();
         $user3  ->setLogin('rita')
-            ->setFirstname('topi')
-            ->setName('nambour')
+            ->setFirstname('rita')
+            ->setName('zrour')
             ->setBirthdate( new \DateTime())
             ->setRoles(['ROLE_CLIENT']);
         $user3 ->setPassword('$2y$13$/.2E6LWo.wGfs4DGhRNJbOMBc//mAwMb3IoleFLw6bpzKSnkc9vW6');
@@ -57,8 +57,8 @@ class AppFixtures extends Fixture
 
         $user4 = new User();
         $user4  ->setLogin('boumediene')
-            ->setFirstname('topi')
-            ->setName('nambour')
+            ->setFirstname('boumediene')
+            ->setName('saidi')
             ->setBirthdate( new \DateTime())
             ->setRoles(['ROLE_CLIENT']);
         $user4 ->setPassword('$2y$13$lDN8OeCYXpchwjAzjMyX..K.LNjjMISsFkMtixfm79iSDXWnURpe6');
