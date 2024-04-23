@@ -4,6 +4,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,10 +24,11 @@ class EditCartType extends AbstractType
                 [
                     'label'=>'Modifiez votre panier',
                     'choices'=> $choices,
+                    'data'=>0,
                     'mapped'=>false,
                 ]
             )
-        ;
+            ->add('send',SubmitType::class,['label'=>'Modifier']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

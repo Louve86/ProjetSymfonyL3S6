@@ -11,8 +11,9 @@
     {% else %}
         <li><a href="{{ path('app_logout') }}">Deconnexion</a></li>
         {% if is_granted('ROLE_CLIENT') %}
-            <li>Mon compte</li>
-            <li><a href="{{ path('produit_list') }}">Produits</a></li>
+            <li>Mon Profil</li>
+            <li><a href="{{ path('produit_list') }}">Les Produits</a></li>
+            <li>Mon Panier</li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li><a href="{{ path('admin_list') }}">Clients</a></li>
             {% endif %}

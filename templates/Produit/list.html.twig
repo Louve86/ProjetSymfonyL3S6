@@ -12,7 +12,7 @@
             {% if user.shoppingCart is not null %}
             {% for cartProduct in user.shoppingCart.shoppingCartProducts %}
                 {% if cartProduct.product == produit %}
-                    {% set nbInCart = cartProduct.quantities %}
+                    {% set nbInCart = cartProduct.quantity %}
                 {% endif %}
             {% endfor%}
             {% endif %}
@@ -21,7 +21,7 @@
                 <td>{{ produit.quantity }}</td>
                 {% if (nbInCart != 0) or (produit.quantity != 0) %}
                     <td>
-                        {{ render(controller('App\\Controller\\ProduitController::EditCartAction',{'min':-nbInCart,'max':produit.quantity})) }}
+                        {{ render(controller('App\\Controller\\ProduitController::EditCartAction',{'min':-nbInCart,'max':produit.quantity,'produitId' : produit.id,'userId' : user.id})) }}
                     </td>
                 {% endif %}
             </tr>
