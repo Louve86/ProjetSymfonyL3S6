@@ -21,7 +21,7 @@
                 <td>{{ produit.quantity }}</td>
                 {% if (nbInCart != 0) or (produit.quantity != 0) %}
                     <td>
-                        {{ render(controller('App\\Controller\\ProduitController::EditCartAction',{'min':-nbInCart,'max':produit.quantity,'produitId' : produit.id,'userId' : user.id})) }}
+                        {{ render(controller('App\\Controller\\ClientController::EditCartAction',{'min':-nbInCart,'max':produit.quantity,'produitId' : produit.id,'userId' : user.id})) }}
                     </td>
                 {% endif %}
             </tr>

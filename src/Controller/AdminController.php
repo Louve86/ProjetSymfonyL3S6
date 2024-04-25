@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Entity\User;
 use App\Form\AddProductType;
-use App\Form\ProductType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

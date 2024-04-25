@@ -7,24 +7,26 @@ use App\Entity\ShoppingCart;
 use App\Entity\ShoppingCartProduct;
 use App\Entity\User;
 use App\Form\EditCartType;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/produit',name:'produit')]
-class ProduitController extends AbstractController
+#[Route('/client',name:'client')]
+class ClientController extends AbstractController
 {
-    #[Route('/list', name:'_list')]
+    #[Route('/produits_list', name:'_produits_list')]
     public function listAction(EntityManagerInterface $em) : Response{
         $produits=$em->getRepository(Product::class)->findAll();
-        return $this->render('Produit/list.html.twig',array('produits'=>$produits,'user'=>$this->getUser()));
+        return $this->render('Client/list.html.twig',array('produits'=>$produits,'user'=>$this->getUser()));
     }
 
     public function EditCartAction(Request $request,EntityManagerInterface $em, $min,int $max,int $produitId,int $userId): Response{
         $form=$this->createForm(EditCartType::class,null,['data'=>['min'=>$min,'max'=>$max]]);
-        return $this->render('Produit/EditCart.html.twig',['myform'=>$form->createView(),'min'=>$min,'max'=>$max,'produitId'=>$produitId,'userId'=>$userId]);
+        return $this->render('Client/EditCart.html.twig',['myform'=>$form->createView(),'min'=>$min,'max'=>$max,'produitId'=>$produitId,'userId'=>$userId]);
     }
 
     #[Route('/handleForm/{min}/{max}/{userId}/{produitId}', name:'_handleForm')]
@@ -51,6 +53,7 @@ class ProduitController extends AbstractController
                 }
             }
             if(!$prodexist && $nbArticles!=0){
+                dump("le produit n'existe pas et n'est pas à zéro");
                 $cartProd=new ShoppingCartProduct();
                 $cartProd->setProduct($produit)
                     ->setQuantity($nbArticles)
@@ -61,7 +64,7 @@ class ProduitController extends AbstractController
             $em->flush();
             dump($form->get('nbArticles')->getData());
         }
-        return $this->redirectToRoute("produit_list");
+        return $this->redirectToRoute("client_produits_list");
     }
 
 }

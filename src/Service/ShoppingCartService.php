@@ -18,11 +18,11 @@ class ShoppingCartService
 
         $user = $this->entityManager->getRepository(User::class)->find($userId);
         $shoppingCart = $user->getShoppingCart();
-
+        $nbProducts=0;
         if ($shoppingCart) {
-            $nbProducts = count($shoppingCart->getShoppingCartProducts());
-        } else{
-            $nbProducts = 0;
+            foreach ($shoppingCart->getShoppingCartProducts() as $cartProduct) {
+                $nbProducts=$nbProducts+$cartProduct->getQuantity();
+            }
         }
         return $nbProducts;
     }
