@@ -1,0 +1,35 @@
+{% extends 'Layouts/vente.html.twig' %}
+{% block title %}Mon panier{% endblock %}
+{% block titre %}Contenu de votre panier{% endblock %}
+{% block vue %}
+    {% if produits is not null %}
+        {% if produits.count != 0 %}
+        <table>
+            <tr>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Prix total</th>
+                <th>Action</th>
+            </tr>
+            {% for produit in produits %}
+                {% set prix_uni = produit.product.price%}
+                {% set quant = produit.quantity%}
+                <tr>
+                    <th>{{ produit.product.name }}</th>
+                    <th>{{ prix_uni}}</th>
+                    <th>{{ quant}}</th>
+                    <th>{{ prix_uni * quant}}</th>
+                    <th><button onclick="window.location.href='{{ path ('client_deleteCartProd',{'id_prod': produit.id}) }}'">Supprimer</button></th>
+                </tr>
+            {% endfor %}
+        </table>
+            <button onclick="window.location.href='{{ path ('client_buy',{'id_cart': cart.id}) }}'">Acheter</button>
+            <button onclick="window.location.href='{{ path ('client_emptyCart',{'id_cart': cart.id}) }}'">Vider</button>
+        {% else %}
+            Vous n'avez aucun produits dans votre panier
+        {% endif %}
+    {% else %}
+        Vous n'avez aucun produits dans votre panier
+    {% endif %}
+{% endblock %}
