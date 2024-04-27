@@ -1,1 +1,13 @@
-<p>Entête du site</p>
+{% if is_granted('ROLE_CLIENT') %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <img src="{{ asset('images/header_admin.jpg') }}" alt="ciel bleu avec nuage 1"/>
+    {% else %}
+        <img src="{{ asset('images/header_auth.jpg') }}" alt="ciel bleu avec nuage 2"/>
+    {% endif %}
+{% else %}
+    {% if is_granted('ROLE_SUPERADMIN') %}
+        <img src="{{ asset('images/header_admin.jpg') }}" alt="ciel bleu avec nuage 1"/>
+    {% else %}
+        <img src="{{ asset('images/header_non_auth.jpg')}}" alt="ciel bleu avec nuage 3">
+    {% endif %}
+{% endif %}

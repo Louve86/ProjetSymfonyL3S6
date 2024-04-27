@@ -90,7 +90,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('/cart', name:'_cart')]
-    public function cartAction(Request $request,EntityManagerInterface $em){
+    public function cartAction(Request $request,EntityManagerInterface $em) : Response{
         $user=$this->getUser();
         $produits=null;
         $cart = $user->getShoppingCart();
@@ -101,7 +101,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('/deleteCartProd/{id_prod}',name:'_deleteCartProd',requirements: ['id'=>'\d+'])]
-    public function deleteCartProdAction( int $id_prod,EntityManagerInterface $em){
+    public function deleteCartProdAction( int $id_prod,EntityManagerInterface $em) : Response {
         $productCart=$em->getRepository(ShoppingCartProduct::class)->find($id_prod);
         if (is_null($productCart)){
             throw new NotFoundHttpException('Ce produit de panier n\'existe pas');
@@ -114,7 +114,7 @@ class ClientController extends AbstractController
         return $this->redirectToRoute('client_cart');
     }
     #[Route('/emptyCart/{id_cart}',name:'_emptyCart',requirements: ['id'=>'\d+'])]
-    public function emptyCartAction(int $id_cart,EntityManagerInterface $em){
+    public function emptyCartAction(int $id_cart,EntityManagerInterface $em) : Response{
         $cart=$em->getRepository(ShoppingCart::class)->find($id_cart);
         if (is_null($cart)){
             throw new NotFoundHttpException("Ce panier n\'existe pas");
@@ -132,7 +132,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('/buy/{id_cart}',name:'_buy',requirements: ['id'=>'\d+'])]
-    public function buyAction(int $id_cart,EntityManagerInterface $em){
+    public function buyAction(int $id_cart,EntityManagerInterface $em) : Response{
         $cart=$em->getRepository(ShoppingCart::class)->find($id_cart);
         if (is_null($cart)){
             throw new NotFoundHttpException("Ce panier n\'existe pas");
