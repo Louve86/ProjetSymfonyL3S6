@@ -39,6 +39,7 @@ class AccueilController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setRoles(['ROLE_CLIENT']);
+            $em->persist($user);
             $em->flush();
             $this->addFlash('info', 'Compte crée, essayez de vous connecter!');
             return $this->redirectToRoute("accueil");
